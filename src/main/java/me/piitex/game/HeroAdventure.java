@@ -4,6 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import me.piitex.game.characters.NarCharacter;
 import me.piitex.game.characters.YouCharacter;
+import me.piitex.game.data.GameData;
 import me.piitex.game.listeners.DonateListener;
 import me.piitex.game.stories.IntroStory;
 import me.piitex.renjava.RenJava;
@@ -47,10 +48,16 @@ public class HeroAdventure extends RenJava {
         registerCharacter(youCharacter);
 
         // Persistent Data
+
+        // All data in here will be saved to the save file.
+        GameData gameData = new GameData();
+        registerData(gameData);
     }
 
     @Override
     public Menu buildSplashScreen() {
+        // Splash screen is a beginning screen. Usually a 600x400 window that represents the loading process.
+        // Return null to skip it.
         return null;
     }
 
