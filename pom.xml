@@ -43,7 +43,7 @@
         <dependency>
             <groupId>me.piitex</groupId>
             <artifactId>RenJava</artifactId>
-            <version>0.0.802-SNAPSHOT</version>
+            <version>0.1.26-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
