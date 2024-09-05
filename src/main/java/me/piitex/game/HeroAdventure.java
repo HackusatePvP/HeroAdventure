@@ -6,18 +6,23 @@ import me.piitex.game.characters.NarCharacter;
 import me.piitex.game.characters.YouCharacter;
 import me.piitex.game.data.GameData;
 import me.piitex.game.listeners.DonateListener;
+import me.piitex.game.listeners.MenuListener;
+import me.piitex.game.stories.Chapter1Story;
 import me.piitex.game.stories.IntroStory;
 import me.piitex.renjava.RenJava;
 import me.piitex.renjava.api.Game;
 import me.piitex.renjava.api.loaders.FontLoader;
 import me.piitex.renjava.configuration.Configuration;
 import me.piitex.renjava.configuration.RenJavaConfiguration;
-import me.piitex.renjava.gui.Menu;
+import me.piitex.renjava.gui.Container;
+import me.piitex.renjava.gui.DisplayOrder;
 import me.piitex.renjava.gui.StageType;
-import me.piitex.renjava.gui.layouts.impl.VerticalLayout;
-import me.piitex.renjava.gui.overlay.ButtonOverlay;
-import me.piitex.renjava.gui.overlay.ImageOverlay;
-import me.piitex.renjava.gui.overlay.TextOverlay;
+import me.piitex.renjava.gui.Window;
+import me.piitex.renjava.gui.containers.EmptyContainer;
+import me.piitex.renjava.gui.layouts.VerticalLayout;
+import me.piitex.renjava.gui.overlays.ButtonOverlay;
+import me.piitex.renjava.gui.overlays.ImageOverlay;
+import me.piitex.renjava.gui.overlays.TextOverlay;
 
 @Game(name = "Hero Adventure", author = "piitex", version = "0.0.1")
 @Configuration(title = "{name} v{version}", width = 1920, height = 1080)
@@ -32,9 +37,12 @@ public class HeroAdventure extends RenJava {
         RenJavaConfiguration configuration = getConfiguration();
         configuration.setUiFont(new FontLoader("Roboto-Black.ttf", 32));
         configuration.setDefaultFont(new FontLoader("Roboto-Regular.ttf", 28));
+        configuration.setChoiceButtonFont(configuration.getDefaultFont());
         configuration.setHoverColor(Color.rgb(66, 147, 245));
+        configuration.setChoiceButtonColor(Color.WHITE);
 
         // Register Listeners
+        registerListener(new MenuListener());
         registerListener(new DonateListener());
 
     }
@@ -48,6 +56,9 @@ public class HeroAdventure extends RenJava {
         YouCharacter youCharacter = new YouCharacter();
         registerCharacter(youCharacter);
 
+        // Testing exceptions
+        //getCharacter("asdasd"); // This should throw invalid character exception
+
         // Persistent Data
 
         // All data in here will be saved to the save file.
@@ -56,15 +67,16 @@ public class HeroAdventure extends RenJava {
     }
 
     @Override
-    public Menu buildSplashScreen() {
+    public Window buildSplashScreen() {
         // Splash screen is a beginning screen. Usually a 600x400 window that represents the loading process.
         // Return null to skip it.
         return null;
     }
 
     @Override
-    public Menu buildTitleScreen(boolean rightClick) {
-        Menu menu = new Menu(1920, 1080, new ImageOverlay("gui/main_menu.png"));
+    public Container buildMainMenu(boolean rightClick) {
+        Container menu = new EmptyContainer(1920, 1080);
+        menu.addOverlay(new ImageOverlay("gui/main_menu.png"));
 
         TextOverlay gameText = new TextOverlay(name + ' ' + version, new FontLoader(getConfiguration().getUiFont(), 36), 1500, 975);
 
@@ -74,19 +86,23 @@ public class HeroAdventure extends RenJava {
     }
 
     @Override
-    public Menu buildSideMenu(boolean rightClickedMenu) {
-        Menu menu = new Menu(1920, 1080, new ImageOverlay("gui/overlay/main_menu.png"));
+    public Container buildSideMenu(boolean rightClickedMenu) {
+        Container menu = new EmptyContainer(1920, 1080, DisplayOrder.HIGH);
+
+        ImageOverlay imageOverlay = new ImageOverlay("gui/overlay/main_menu.png");
+        imageOverlay.setOrder(DisplayOrder.LOW);
+        menu.addOverlay(imageOverlay);
 
         Font uiFont = RenJava.getInstance().getConfiguration().getUiFont().getFont();
 
         Color hoverColor = getConfiguration().getHoverColor();
 
-        ButtonOverlay startButton = new ButtonOverlay("menu-start-button", "Start", Color.BLACK, uiFont, Color.TRANSPARENT, Color.TRANSPARENT, hoverColor, 1, 1);
-        ButtonOverlay loadButton = new ButtonOverlay("menu-load-button", "Load", Color.BLACK, uiFont, Color.TRANSPARENT, Color.TRANSPARENT, hoverColor, 1, 1);
-        ButtonOverlay saveButton = new ButtonOverlay("menu-save-button", "Save", Color.BLACK, uiFont, Color.TRANSPARENT, Color.TRANSPARENT, hoverColor, 1, 1);
-        ButtonOverlay optionsButton = new ButtonOverlay("menu-preference-button", "Preferences", Color.BLACK, uiFont, Color.TRANSPARENT, Color.TRANSPARENT, hoverColor, 1, 1);
-        ButtonOverlay aboutButton = new ButtonOverlay("menu-about-button", "About", Color.BLACK, uiFont, Color.TRANSPARENT, Color.TRANSPARENT, hoverColor, 1, 1);
-        ButtonOverlay donateButton = new ButtonOverlay("menu-donate-button", "Donate", Color.BLACK, uiFont, Color.TRANSPARENT, Color.TRANSPARENT, hoverColor, 1, 1);
+        ButtonOverlay startButton = new ButtonOverlay("menu-start-button", "Start", Color.BLACK, uiFont, Color.TRANSPARENT, Color.TRANSPARENT, hoverColor);
+        ButtonOverlay loadButton = new ButtonOverlay("menu-load-button", "Load", Color.BLACK, uiFont, Color.TRANSPARENT, Color.TRANSPARENT, hoverColor);
+        ButtonOverlay saveButton = new ButtonOverlay("menu-save-button", "Save", Color.BLACK, uiFont, Color.TRANSPARENT, Color.TRANSPARENT, hoverColor);
+        ButtonOverlay optionsButton = new ButtonOverlay("menu-preference-button", "Preferences", Color.BLACK, uiFont, Color.TRANSPARENT, Color.TRANSPARENT, hoverColor);
+        ButtonOverlay aboutButton = new ButtonOverlay("menu-about-button", "About", Color.BLACK, uiFont, Color.TRANSPARENT, Color.TRANSPARENT, hoverColor);
+        ButtonOverlay donateButton = new ButtonOverlay("menu-donate-button", "Donate", Color.BLACK, uiFont, Color.TRANSPARENT, Color.TRANSPARENT, hoverColor);
 
         // Create vbox for the buttons. You can also do an HBox
         VerticalLayout layout = new VerticalLayout(400, 500);
@@ -104,11 +120,10 @@ public class HeroAdventure extends RenJava {
 
         ButtonOverlay returnButton;
 
-
-        if (getStageType() == StageType.MAIN_MENU) {
-            returnButton = new ButtonOverlay("menu-quit-button", "Quit", Color.BLACK, uiFont, Color.TRANSPARENT, Color.TRANSPARENT, hoverColor, 1, 1);
+        if (getPlayer().getCurrentStageType() == StageType.MAIN_MENU) {
+            returnButton = new ButtonOverlay("menu-quit-button", "Quit", Color.BLACK, uiFont, Color.TRANSPARENT, Color.TRANSPARENT, hoverColor);
         } else {
-            returnButton = new ButtonOverlay("menu-return-button", "Return", Color.BLACK, uiFont, Color.TRANSPARENT, Color.TRANSPARENT, hoverColor, 1, 1);
+            returnButton = new ButtonOverlay("menu-return-button", "Return", Color.BLACK, uiFont, Color.TRANSPARENT, Color.TRANSPARENT, hoverColor);
         }
         returnButton.setX(25);
         returnButton.setY(1000);
@@ -121,6 +136,7 @@ public class HeroAdventure extends RenJava {
     public void createStory() {
         // Create and Map Stories
         new IntroStory("intro");
+        new Chapter1Story("chap1");
     }
 
     @Override
