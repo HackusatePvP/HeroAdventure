@@ -26,6 +26,7 @@ public class Chapter1Story extends Story {
     @Override
     public void init() {
         Character nar = RenJava.getInstance().getCharacter("nar");
+        Character you = RenJava.getInstance().getCharacter("mc");
 
         //FIXME: !!! This does not work. I'm currently working to fix it !!!
 
@@ -33,12 +34,16 @@ public class Chapter1Story extends Story {
         inputScene.setDefaultInput("Astro");
 
         inputScene.onSet(event -> {
+            System.out.println("Setting input event...");
             YouCharacter youCharacter = (YouCharacter) RenJava.getInstance().getCharacter("mc");
             youCharacter.setName(event.getInput());
+
+            // If you update var information you need to refresh
+            this.refresh();
         });
         addScene(inputScene);
 
-        addScene(new ImageScene("2", nar, "Welcome, {}, to Hero Adventure").onBuild(event -> {
+        addScene(new ImageScene("2", nar, "Welcome, " + you.getName() + ", to Hero Adventure").onBuild(event -> {
             Character youCharacter = RenJava.getInstance().getCharacter("mc");
             for (Overlay overlay : event.getContainer().getOverlays()) {
                 if (overlay instanceof TextOverlay textOverlay) {
