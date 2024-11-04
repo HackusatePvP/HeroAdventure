@@ -1,0 +1,13 @@
+me.piitex.renjava.api.music.Tracks:
+	isPlaying: false
+	currentTrack: music.mp3
+	isLooping: true
+me.piitex.game.data.GameData:
+	totalDays: 0
+	day: 0
+me.piitex.renjava.api.player.Player:
+	viewedStories: [intro]
+	currentStory: intro
+	currentScene: 6
+	viewedScenes:
+		intro: 6

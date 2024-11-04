@@ -28,8 +28,6 @@ public class Chapter1Story extends Story {
         Character nar = RenJava.getInstance().getCharacter("nar");
         Character you = RenJava.getInstance().getCharacter("mc");
 
-        //FIXME: !!! This does not work. I'm currently working to fix it !!!
-
         InputScene inputScene = new InputScene("1", "Please enter your name: ", new ImageOverlay("stories/intro/introbg.png"));
         inputScene.setDefaultInput("Astro");
 
@@ -43,13 +41,8 @@ public class Chapter1Story extends Story {
         });
         addScene(inputScene);
 
-        addScene(new ImageScene("2", nar, "Welcome, " + you.getName() + ", to Hero Adventure").onBuild(event -> {
-            Character youCharacter = RenJava.getInstance().getCharacter("mc");
-            for (Overlay overlay : event.getContainer().getOverlays()) {
-                if (overlay instanceof TextOverlay textOverlay) {
-                    textOverlay.setText(textOverlay.getText().replace("{}", youCharacter.getName()));
-                }
-            }
-        }));
+        addScene(new ImageScene("2", nar, "Welcome, " + you.getName() + ", to Hero Adventure"));
+
+
     }
 }

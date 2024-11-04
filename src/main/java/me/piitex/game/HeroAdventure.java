@@ -60,7 +60,6 @@ public class HeroAdventure extends RenJava {
         //getCharacter("asdasd"); // This should throw invalid character exception
 
         // Persistent Data
-
         // All data in here will be saved to the save file.
         GameData gameData = new GameData();
         registerData(gameData);
@@ -75,11 +74,15 @@ public class HeroAdventure extends RenJava {
 
     @Override
     public Container buildMainMenu(boolean rightClick) {
+        // Empty container behaves like the old menu system.
+        // It is essentially an empty box which you add overlays to.
         Container menu = new EmptyContainer(1920, 1080);
         menu.addOverlay(new ImageOverlay("gui/main_menu.png"));
 
+        // Basic text overlay
         TextOverlay gameText = new TextOverlay(name + ' ' + version, new FontLoader(getConfiguration().getUiFont(), 36), 1500, 975);
 
+        // Add the overlay to the container
         menu.addOverlay(gameText);
 
         return menu;
@@ -106,6 +109,7 @@ public class HeroAdventure extends RenJava {
 
         // Create vbox for the buttons. You can also do an HBox
         VerticalLayout layout = new VerticalLayout(400, 500);
+        layout.setOrder(DisplayOrder.HIGH);
         layout.setX(50);
         layout.setY(250);
         layout.setSpacing(20);

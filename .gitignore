@@ -36,3 +36,9 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+## RSDK
+RSDK-1.2-SNAPSHOT.jar
+/HeroAdventure-1.0-SNAPSHOT/jdk/
+/HeroAdventure-1.0-SNAPSHOT/logs/
+/HeroAdventure-1.0-SNAPSHOT/renjava/

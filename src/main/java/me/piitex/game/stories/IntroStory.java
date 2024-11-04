@@ -18,7 +18,7 @@ public class IntroStory extends Story {
 
     @Override
     public void init() {
-        // Add the scenes.
+        // Fetch the characters
         Character nar = HeroAdventure.getInstance().getCharacter("nar");
         Character mc = HeroAdventure.getInstance().getCharacter("mc");
 
