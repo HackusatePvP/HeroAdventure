@@ -64,7 +64,8 @@ public class IntroStory extends Story {
                 }));
         addScene(new ImageScene("7", mc, "Too much work to get out of bed and quite frankly I'm too damn tired."));
         addScene(new ImageScene("8", nar, "It can be a different heroes turn today as I am taking the day off.").onEnd(event -> {
-            displayScene(1);
+            // A little confusing, but indexes start at 0. The first scene will have the index of 0. The second scene will be 1.
+            displayScene(0);
             // Re-loops the current story.
         }));
     }
