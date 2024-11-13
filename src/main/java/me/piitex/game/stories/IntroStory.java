@@ -3,6 +3,7 @@ package me.piitex.game.stories;
 import javafx.scene.paint.Color;
 import me.piitex.game.HeroAdventure;
 import me.piitex.renjava.api.characters.Character;
+import me.piitex.renjava.api.scenes.animation.VideoScene;
 import me.piitex.renjava.api.scenes.transitions.types.FadingTransition;
 import me.piitex.renjava.api.scenes.types.ImageScene;
 import me.piitex.renjava.api.scenes.types.choices.Choice;
@@ -27,6 +28,18 @@ public class IntroStory extends Story {
         addScene(new ImageScene("1", nar, "It's time to wake up again.", new ImageOverlay("stories/intro/introbg.png")).setBeginningTransition(new FadingTransition(0,1,3, Color.BLACK)));
         addScene(new ImageScene("2", mc, "But I don't want to wake up. I just want to sleep here all day."));
         addScene(new ImageScene("3", mc, "I guess I have a choice to make. Lay here all day or get up.."));
+
+        // IMPORTANT! VIDEO SCENES DO NOT SUPPORT HEVC OR AV1 ENCODERS (modern).
+        // Keep in mind different OS's will have different support for encodings as well.
+        //
+        // I recommend H.264 if possible.
+        //
+        // SUPPORTED VIDEO ENCODINGS. Find more here https://docs.oracle.com/javafx/2/api/javafx/scene/media/package-summary.html
+        //  MPEG-4 (.mp4)
+        //  VP6 (.vp6 I think??) This was used for Adobe-FlashPlayer so probably not a good choice.
+        //  H.264 (Nvidia encoding) (.mp4) The most modern encoder supported.
+        // You can use encoder programs ShutterEncoder to migrate your video file to a supported type.
+        addScene(new VideoScene("4", "images/video/vid.mp4", true));
 
 
         ChoiceScene choiceScene = new ChoiceScene("4");
