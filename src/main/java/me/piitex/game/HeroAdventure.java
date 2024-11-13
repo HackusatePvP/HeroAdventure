@@ -14,6 +14,7 @@ import me.piitex.renjava.api.Game;
 import me.piitex.renjava.api.loaders.FontLoader;
 import me.piitex.renjava.configuration.Configuration;
 import me.piitex.renjava.configuration.RenJavaConfiguration;
+import me.piitex.renjava.events.defaults.ScenesEventListener;
 import me.piitex.renjava.gui.Container;
 import me.piitex.renjava.gui.DisplayOrder;
 import me.piitex.renjava.gui.StageType;
@@ -96,7 +97,7 @@ public class HeroAdventure extends RenJava {
         imageOverlay.setOrder(DisplayOrder.LOW);
         menu.addOverlay(imageOverlay);
 
-        Font uiFont = RenJava.getInstance().getConfiguration().getUiFont().getFont();
+        FontLoader uiFont = RenJava.getInstance().getConfiguration().getUiFont();
 
         Color hoverColor = getConfiguration().getHoverColor();
 
