@@ -32,7 +32,6 @@ public class Chapter1Story extends Story {
         inputScene.setDefaultInput("Astro");
 
         inputScene.onSet(event -> {
-            System.out.println("Setting input event...");
             YouCharacter youCharacter = (YouCharacter) RenJava.getInstance().getCharacter("mc");
             youCharacter.setName(event.getInput());
 
