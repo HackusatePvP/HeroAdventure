@@ -1,7 +1,6 @@
 package me.piitex.game;
 
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import me.piitex.game.characters.NarCharacter;
 import me.piitex.game.characters.YouCharacter;
 import me.piitex.game.data.GameData;
@@ -14,7 +13,6 @@ import me.piitex.renjava.api.Game;
 import me.piitex.renjava.api.loaders.FontLoader;
 import me.piitex.renjava.configuration.Configuration;
 import me.piitex.renjava.configuration.RenJavaConfiguration;
-import me.piitex.renjava.events.defaults.ScenesEventListener;
 import me.piitex.renjava.gui.Container;
 import me.piitex.renjava.gui.DisplayOrder;
 import me.piitex.renjava.gui.StageType;
@@ -77,7 +75,7 @@ public class HeroAdventure extends RenJava {
     public Container buildMainMenu(boolean rightClick) {
         // Empty container behaves like the old menu system.
         // It is essentially an empty box which you add overlays to.
-        Container menu = new EmptyContainer(1920, 1080);
+        Container menu = new EmptyContainer(1280, 720);
         menu.addOverlay(new ImageOverlay("gui/main_menu.png"));
 
         // Basic text overlay
@@ -91,7 +89,7 @@ public class HeroAdventure extends RenJava {
 
     @Override
     public Container buildSideMenu(boolean rightClickedMenu) {
-        Container menu = new EmptyContainer(1920, 1080, DisplayOrder.HIGH);
+        Container menu = new EmptyContainer(1280, 720, DisplayOrder.HIGH);
 
         ImageOverlay imageOverlay = new ImageOverlay("gui/overlay/main_menu.png");
         imageOverlay.setOrder(DisplayOrder.LOW);
@@ -125,13 +123,13 @@ public class HeroAdventure extends RenJava {
 
         ButtonOverlay returnButton;
 
-        if (getPlayer().getCurrentStageType() == StageType.MAIN_MENU) {
+        if (PLAYER.getCurrentStageType() == StageType.MAIN_MENU) {
             returnButton = new ButtonOverlay("menu-quit-button", "Quit", Color.BLACK, uiFont, Color.TRANSPARENT, Color.TRANSPARENT, hoverColor);
         } else {
             returnButton = new ButtonOverlay("menu-return-button", "Return", Color.BLACK, uiFont, Color.TRANSPARENT, Color.TRANSPARENT, hoverColor);
         }
         returnButton.setX(25);
-        returnButton.setY(1000);
+        returnButton.setY(980);
         menu.addOverlay(returnButton);
 
         return menu;
@@ -147,7 +145,7 @@ public class HeroAdventure extends RenJava {
     @Override
     public void start() {
         // Player presses 'start'
-        getPlayer().startStory("intro");
+        PLAYER.startStory("intro");
     }
 
     public static HeroAdventure getInstance() {

@@ -1,5 +1,6 @@
 package me.piitex.game.stories;
 
+import me.piitex.game.HeroAdventure;
 import me.piitex.game.characters.YouCharacter;
 import me.piitex.renjava.RenJava;
 import me.piitex.renjava.api.characters.Character;
@@ -7,8 +8,6 @@ import me.piitex.renjava.api.scenes.types.ImageScene;
 import me.piitex.renjava.api.scenes.types.input.InputScene;
 import me.piitex.renjava.api.stories.Story;
 import me.piitex.renjava.gui.overlays.ImageOverlay;
-import me.piitex.renjava.gui.overlays.Overlay;
-import me.piitex.renjava.gui.overlays.TextOverlay;
 
 public class Chapter1Story extends Story {
     /**
@@ -19,7 +18,7 @@ public class Chapter1Story extends Story {
     public Chapter1Story(String id) {
         super(id);
         onEnd(endEvent -> {
-            RenJava.getInstance().getPlayer().startStory("intro");
+            HeroAdventure.PLAYER.startStory("intro");
         });
     }
 
